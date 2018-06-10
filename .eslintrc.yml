@@ -1,0 +1,6 @@
+extends: standard
+env:
+  browser: true
+rules:
+  quotes: ["error", "double"]
+  max-len: ["error", { "code": 90 }]
