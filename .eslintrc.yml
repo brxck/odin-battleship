@@ -1,6 +1,8 @@
-extends: standard
+extends: ["standard", "plugin:jest/recommended"]
 env:
   browser: true
 rules:
   quotes: ["error", "double"]
   max-len: ["error", { "code": 90 }]
+plugins:
+  ["jest"]
