@@ -7,29 +7,29 @@ const Gameboard = size => {
     board: new Array(size).fill(new Array(size).fill(0)),
     place: function (ship, x, y, dir) {
       let spaces = []
-      let pair
+      let coord
 
       for (let i = 0; i < ship.length; i++) {
         if (dir === "h") {
-          pair = { x: x + i, y: y }
+          coord = { x: x + i, y: y }
         } else if (dir === "v") {
-          pair = { x: x, y: y + i }
+          coord = { x: x, y: y + i }
         } else {
           console.error("invalid direction")
           return
         }
 
-        if (this.board[pair.x][pair.y] === 0) {
-          spaces.push(pair)
+        if (this.board[coord.x][coord.y] === 0) {
+          spaces.push(coord)
         } else {
           // square not on board
-          console.error("not on board", pair)
+          console.error("not on board", coord)
           return
         }
       }
 
-      spaces.forEach(pair => {
-        this.board[pair.x][pair.y] = ship
+      spaces.forEach(coord => {
+        this.board[coord.x][coord.y] = ship
       })
     },
 
