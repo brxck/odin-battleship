@@ -1,4 +1,5 @@
 import Gameboard from "./gameboard"
+import Ship from "./ship"
 
 test("has size", () => {
   const gameboard = Gameboard(10)
@@ -63,10 +64,33 @@ test("won't place ship offboard", () => {
   expect(gameboard.board).toEqual(Gameboard(3).board)
 })
 
-test.skip("receives attack", () => {
+test("returns attack outcome", () => {
   const ship = Ship(3)
   const gameboard = Gameboard(3)
-  gameboard.please(ship, 0, 0, "h")
+  gameboard.place(ship, 0, 0, "h")
 
-  gameboard.attack(0, 0)
+  expect(gameboard.receiveAttack(1, 0)).toEqual(true)
+  expect(gameboard.receiveAttack(2, 2)).toEqual(false)
+})
+
+test("sends attack to ship", () => {
+  const ship = Ship(3)
+  const gameboard = Gameboard(3)
+  gameboard.place(ship, 0, 0, "h")
+
+  gameboard.receiveAttack(1, 0)
+  expect(ship.hits).toEqual([0, 1, 0])
+})
+
+test("reports all ships sunk", () => {
+  const smallShip = { length: 3, isSunk: () => true }
+  const largeShip = { length: 5, isSunk: () => false }
+  const gameboard = Gameboard(5)
+  gameboard.place(smallShip, 0, 1, "v")
+  gameboard.place(largeShip, 0, 0, "h")
+
+  expect(gameboard.allShipsSunk()).toEqual(false)
+
+  largeShip.isSunk = () => true
+  expect(gameboard.allShipsSunk()).toEqual(true)
 })

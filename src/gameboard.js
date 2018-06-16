@@ -11,6 +11,7 @@ const Gameboard = size => {
   const newGameboard = {
     size: size,
     board: board,
+    ships: [],
 
     setSquare: function (x, y, value) {
       if (this.board[x] !== undefined && this.board[x][y] !== undefined) {
@@ -58,6 +59,28 @@ const Gameboard = size => {
       spaces.forEach((pair, index) => {
         this.setSquare(pair.x, pair.y, { ship: ship, index: index })
       })
+
+      this.ships.push(ship)
+    },
+
+    receiveAttack: function (x, y) {
+      const square = this.square(x, y)
+      if (square === 0) {
+        return false
+      } else if (square.ship) {
+        square.ship.hit(square.index)
+        return true
+      }
+    },
+
+    allShipsSunk: function () {
+      let allSunk = true
+      this.ships.forEach(ship => {
+        if (!ship.isSunk()) {
+          allSunk = false
+        }
+      })
+      return allSunk
     }
   }
 
