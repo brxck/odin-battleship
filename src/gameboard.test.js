@@ -82,6 +82,15 @@ test("sends attack to ship", () => {
   expect(ship.hits).toEqual([0, 1, 0])
 })
 
+test("tracks missed attacks", () => {
+  const gameboard = Gameboard(3)
+  gameboard.receiveAttack(0, 0)
+  gameboard.receiveAttack(1, 1)
+  gameboard.receiveAttack(2, 2)
+
+  expect(gameboard.misses).toEqual([[0, 0], [1, 1], [2, 2]])
+})
+
 test("reports all ships sunk", () => {
   const smallShip = { length: 3, isSunk: () => true }
   const largeShip = { length: 5, isSunk: () => false }

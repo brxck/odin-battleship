@@ -12,6 +12,7 @@ const Gameboard = size => {
     size: size,
     board: board,
     ships: [],
+    misses: [],
 
     setSquare: function (x, y, value) {
       if (this.board[x] !== undefined && this.board[x][y] !== undefined) {
@@ -66,6 +67,7 @@ const Gameboard = size => {
     receiveAttack: function (x, y) {
       const square = this.square(x, y)
       if (square === 0) {
+        this.misses.push([x, y])
         return false
       } else if (square.ship) {
         square.ship.hit(square.index)
