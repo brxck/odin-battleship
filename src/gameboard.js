@@ -12,7 +12,7 @@ const Gameboard = size => {
         const value = this.board[x][y]
         return value
       } else {
-        console.error("no such square")
+        console.error("no such square", [x, y])
       }
     },
 
@@ -26,7 +26,7 @@ const Gameboard = size => {
         } else if (dir === "v") {
           pair = { x: x, y: y + i }
         } else {
-          console.error("invalid direction")
+          console.error("invalid direction", dir)
           return
         }
 
@@ -34,7 +34,7 @@ const Gameboard = size => {
           spaces.push(pair)
         } else {
           // square not on board
-          console.error("not on board", pair, this.square(pair.x, pair.y))
+          console.error("not on board", pair)
           return
         }
       }
