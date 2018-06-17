@@ -1,5 +1,5 @@
-import Gameboard from "./gameboard"
-import Ship from "./ship"
+import Gameboard from "../src/gameboard"
+import Ship from "../src/ship"
 
 test("has size", () => {
   const gameboard = Gameboard(10)

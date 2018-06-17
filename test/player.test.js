@@ -1,6 +1,6 @@
-import Player from "./player"
-import Ship from "./ship"
-import Gameboard from "./gameboard"
+import Player from "../src/player"
+import Ship from "../src/ship"
+import Gameboard from "../src/gameboard"
 
 test("has name and gameboard", () => {
   const player = Player("Marvin", {})
@@ -26,4 +26,11 @@ test("unsuccessful move returns false", () => {
   const gameboard = Gameboard(3)
 
   expect(player.attack(gameboard, 5, 5)).toEqual(false)
+})
+
+test("moves randomly", () => {
+  const player = Player("x", {})
+  const gameboard = Gameboard(3)
+
+  expect(player.randomAttack())
 })
