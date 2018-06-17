@@ -14,8 +14,16 @@ const Gameboard = size => {
     ships: [],
     misses: [],
 
-    setSquare: function (x, y, value) {
+    onBoard: function (x, y) {
       if (this.board[x] !== undefined && this.board[x][y] !== undefined) {
+        return true
+      } else {
+        return false
+      }
+    },
+
+    setSquare: function (x, y, value) {
+      if (this.onBoard(x, y)) {
         this.board[x][y] = value
       } else {
         console.error("no such square", [x, y])
@@ -24,7 +32,7 @@ const Gameboard = size => {
 
     square: function (x, y) {
       // if (0) evaluates to false!
-      if (this.board[x] !== undefined && this.board[x][y] !== undefined) {
+      if (this.onBoard(x, y)) {
         return this.board[x][y]
       } else {
         console.error("no such square", [x, y])
