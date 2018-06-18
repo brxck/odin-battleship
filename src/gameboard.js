@@ -39,17 +39,17 @@ const Gameboard = size => {
       }
     },
 
-    place: function (ship, x, y, dir) {
+    place: function (ship, x, y, direction) {
       let spaces = []
       let pair
 
       for (let i = 0; i < ship.length; i++) {
-        if (dir === "h") {
+        if (direction === "h") {
           pair = { x: x + i, y: y }
-        } else if (dir === "v") {
+        } else if (direction === "v") {
           pair = { x: x, y: y + i }
         } else {
-          console.error("invalid direction", dir)
+          console.error("invalid direction", direction)
           return
         }
 
