@@ -28,7 +28,7 @@ test("unsuccessful move returns false", () => {
   expect(player.attack(gameboard, 5, 5)).toEqual(false)
 })
 
-test("moves randomly", () => {
+test.skip("moves randomly", () => {
   const player = Player("x", {})
   const gameboard = Gameboard(3)
 

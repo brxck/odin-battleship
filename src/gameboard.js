@@ -30,7 +30,7 @@ const Gameboard = size => {
       }
     },
 
-    square: function (x, y) {
+    cell: function (x, y) {
       // if (0) evaluates to false!
       if (this.onBoard(x, y)) {
         return this.board[x][y]
@@ -53,9 +53,9 @@ const Gameboard = size => {
           return
         }
 
-        if (this.square(pair.x, pair.y) === 0) {
+        if (this.cell(pair.x, pair.y) === 0) {
           spaces.push(pair)
-        } else if (this.square(pair.x, pair.y) !== undefined) {
+        } else if (this.cell(pair.x, pair.y) !== undefined) {
           console.error("space not empty", pair)
           return
         } else {
@@ -69,11 +69,12 @@ const Gameboard = size => {
         this.setSquare(pair.x, pair.y, { ship: ship, index: index })
       })
 
+      Object.assign(ship, { x: x, y: y, direction: direction })
       this.ships.push(ship)
     },
 
     receiveAttack: function (x, y) {
-      const square = this.square(x, y)
+      const square = this.cell(x, y)
       if (square === 0) {
         this.misses.push([x, y])
         return false

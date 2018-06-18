@@ -19,21 +19,21 @@ test("returns board square", () => {
   const gameboard = Gameboard(3)
   gameboard.board = [[0, 0, 0], [0, 42, 0], [0, 0, 0]]
 
-  expect(gameboard.square(1, 1)).toEqual(42)
+  expect(gameboard.cell(1, 1)).toEqual(42)
 })
 
 test("sets board square", () => {
   const gameboard = Gameboard(3)
   gameboard.setSquare(2, 2, 42)
 
-  expect(gameboard.square(2, 2)).toEqual(42)
+  expect(gameboard.cell(2, 2)).toEqual(42)
 })
 
 test("doesn't return offboard square", () => {
   const gameboard = Gameboard(3)
   gameboard.board = [[0, 0, 0], [0, 42, 0], [0, 0, 0]]
 
-  expect(gameboard.square(5, 3)).toEqual(undefined)
+  expect(gameboard.cell(5, 3)).toEqual(undefined)
 })
 
 test("places ship horizontally", () => {
@@ -41,9 +41,10 @@ test("places ship horizontally", () => {
   const gameboard = Gameboard(3)
 
   gameboard.place(ship, 0, 0, "h")
-  expect(gameboard.square(0, 0)).toMatchObject({ ship: ship, index: 0 })
-  expect(gameboard.square(1, 0)).toMatchObject({ ship: ship, index: 1 })
-  expect(gameboard.square(2, 0)).toMatchObject({ ship: ship, index: 2 })
+  expect(gameboard.cell(0, 0)).toMatchObject({ ship: ship, index: 0 })
+  expect(gameboard.cell(1, 0)).toMatchObject({ ship: ship, index: 1 })
+  expect(gameboard.cell(2, 0)).toMatchObject({ ship: ship, index: 2 })
+  expect(ship).toMatchObject({ x: 0, y: 0, direction: "h" })
 })
 
 test("places ship vertically", () => {
@@ -51,9 +52,10 @@ test("places ship vertically", () => {
   const gameboard = Gameboard(3)
 
   gameboard.place(ship, 0, 0, "v")
-  expect(gameboard.square(0, 0)).toMatchObject({ ship: ship, index: 0 })
-  expect(gameboard.square(0, 1)).toMatchObject({ ship: ship, index: 1 })
-  expect(gameboard.square(0, 2)).toMatchObject({ ship: ship, index: 2 })
+  expect(gameboard.cell(0, 0)).toMatchObject({ ship: ship, index: 0 })
+  expect(gameboard.cell(0, 1)).toMatchObject({ ship: ship, index: 1 })
+  expect(gameboard.cell(0, 2)).toMatchObject({ ship: ship, index: 2 })
+  expect(ship).toMatchObject({ x: 0, y: 0, direction: "v" })
 })
 
 test("won't place ship offboard", () => {
