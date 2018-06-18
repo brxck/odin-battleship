@@ -79,7 +79,9 @@ const Gameboard = size => {
     },
 
     placeRandom: function (ships) {
+      console.log("ships", ships)
       ships.forEach(ship => {
+        console.log("placing ship", ship)
         const direction = Math.random() < 0.5 ? "h" : "v"
         let x, y
         do {
@@ -87,10 +89,10 @@ const Gameboard = size => {
             x = randomCoordinate(0, this.size - 1 - ship.length)
             y = randomCoordinate()
           } else if (direction === "v") {
-            x = randomCoordinate(0, this.size - 1 - ship.length)
-            y = randomCoordinate()
+            x = randomCoordinate()
+            y = randomCoordinate(0, this.size - 1 - ship.length)
           }
-        } while (this.place(ship, x, y, direction))
+        } while (this.place(ship, x, y, direction) === false)
       })
     },
 
