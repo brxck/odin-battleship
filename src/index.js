@@ -9,10 +9,14 @@ const opponentView = document.getElementById("opponent")
 const gameLoop = () => {
   const playerBoard = Gameboard(10)
   const opponentBoard = Gameboard(10)
-  opponentBoard.place(Ship(3), 0, 0, "h")
-  opponentBoard.place(Ship(3), 2, 2, "v")
+  const ships = [Ship(2), Ship(3), Ship(5)]
+  opponentBoard.placeRandom(ships)
+  playerBoard.placeRandom(ships)
   render(playerBoard, playerView)
   render(opponentBoard, opponentView)
+
+  console.log(opponentBoard)
+  console.log(playerBoard)
 }
 
 gameLoop()
