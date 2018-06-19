@@ -18,6 +18,14 @@ const Player = (name, gameboard, antiBoard) => {
       } else {
         return false
       }
+    },
+
+    won: function () {
+      return antiBoard.allSunk()
+    },
+
+    lost: function () {
+      return gameboard.allSunk()
     }
   }
 
