@@ -1,5 +1,5 @@
 import "./style.scss"
-import render from "./dom"
+import { renderBoard, renderShips } from "./dom"
 import Gameboard from "./gameboard"
 import Ship from "./ship"
 
@@ -13,12 +13,10 @@ const gameLoop = () => {
   const opponentShips = [Ship(2), Ship(3), Ship(5)]
   opponentBoard.placeRandom(opponentShips)
   playerBoard.placeRandom(playerShips)
-  render(playerBoard, playerView)
-  render(opponentBoard, opponentView)
-
-  opponentBoard.addEventListener("click", () =>
-    render(opponentBoard, opponentView)
-  )
+  renderBoard(playerBoard, playerView)
+  renderBoard(opponentBoard, opponentView)
+  renderShips(playerBoard, playerView)
+  // renderShips(opponentBoard, opponentView)
 
   console.log(opponentBoard)
   console.log(playerBoard)

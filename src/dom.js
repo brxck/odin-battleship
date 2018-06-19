@@ -1,15 +1,8 @@
-const render = (gameboard, view) => {
-  view.innerHTML = ""
-  const boardFragment = composeBoard(gameboard)
-  view.appendChild(boardFragment)
-  renderShips(gameboard, view)
-}
-
 const attackElement = (x, y, gameboard) => {
   gameboard.receiveAttack(x, y)
 }
 
-const composeBoard = gameboard => {
+const renderBoard = (gameboard, view) => {
   const boardElement = createElement("table")
 
   for (let y = 0; y < gameboard.size; y++) {
@@ -22,7 +15,8 @@ const composeBoard = gameboard => {
       row.appendChild(cell)
     }
   }
-  return boardElement
+  view.innerHTML = ""
+  view.appendChild(boardElement)
 }
 
 const renderShips = (gameboard, view) => {
@@ -76,4 +70,4 @@ const createElement = (tag, properties) => {
   return element
 }
 
-export default render
+export { renderBoard, renderShips }
