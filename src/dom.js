@@ -66,7 +66,7 @@ const renderPegs = (gameboard, view) => {
 
 const updateFeed = message => {
   const feed = document.getElementById("feed")
-  const messageElement = createElement("p", { textContent: "> " + message })
+  const messageElement = createElement("p", { textContent: message })
   if (feed.childElementCount >= 8) {
     feed.lastChild.remove()
   }

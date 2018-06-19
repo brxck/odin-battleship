@@ -16,12 +16,12 @@ const boardOne = Gameboard(10)
 const boardTwo = Gameboard(10)
 boardOne.placeRandom(Fleet())
 boardTwo.placeRandom(Fleet())
-const playerOne = Player("you", boardOne, boardTwo)
-const playerTwo = Player("cpu", boardTwo, boardOne)
+const playerOne = Player("player", boardOne, boardTwo)
+const playerTwo = Player("opponent", boardTwo, boardOne)
 renderBoard(boardOne, playerView)
 renderBoard(boardTwo, opponentView)
 renderShips(boardOne, playerView)
-renderShips(boardTwo, opponentView)
+// renderShips(boardTwo, opponentView)
 eventController.subscribe("turn", () => {
   console.log("next loop")
   renderPegs(boardOne, playerView)
@@ -33,5 +33,3 @@ eventController.subscribe("turn", () => {
   }
   loop.continue = false
 })
-
-export default start()
