@@ -5,7 +5,7 @@ import eventController from "./event"
 import { Fleet } from "./ship"
 import { renderBoard, renderShips, renderPegs } from "./dom"
 
-process.env.DEBUG = true
+process.env.DEBUG = false
 
 const playerView = document.getElementById("player")
 const opponentView = document.getElementById("opponent")
@@ -19,7 +19,7 @@ const computer = Player("cpu", boardTwo, boardOne)
 renderBoard(player, computer, playerView)
 renderBoard(computer, player, opponentView)
 renderShips(player, playerView)
-renderShips(computer, opponentView)
+// renderShips(computer, opponentView)
 
 eventController.subscribe("turn", () => {
   renderPegs(boardOne, playerView)
@@ -29,4 +29,7 @@ eventController.subscribe("turn", () => {
   } else if (player.lost()) {
     eventController.publish("loss")
   }
+  setTimeout(() => {
+    computer.randomAttack()
+  }, 500)
 })
