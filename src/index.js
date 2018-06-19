@@ -8,21 +8,28 @@ import { renderBoard, renderShips } from "./dom"
 const playerView = document.getElementById("player")
 const opponentView = document.getElementById("opponent")
 
-const gameLoop = () => {
-  eventController.subscribe("hit")
+const gameLoop = playerOne => {
+  if (playerOne.won()) {
+    eventController.publish("victory")
+  } else if (playerOne.lost()) {
+    eventController.publish("loss")
+  }
+}
+
+const start = () => {
   const boardOne = Gameboard(10)
   const boardTwo = Gameboard(10)
   boardOne.placeRandom(Fleet())
   boardTwo.placeRandom(Fleet())
-  const playerOne = Player("human", boardOne, boardTwo)
-  const playerTwo = Player("computer", boardTwo, boardOne)
-  console.log(boardOne)
+  const playerOne = Player("you", boardOne, boardTwo)
+  const playerTwo = Player("cpu", boardTwo, boardOne)
   renderBoard(boardOne, playerView)
   renderBoard(boardTwo, opponentView)
   renderShips(boardOne, playerView)
   renderShips(boardTwo, opponentView)
+  eventController.subscribe("turn", gameLoop(playerOne))
 }
 
-gameLoop()
+start()
 
 export default gameLoop

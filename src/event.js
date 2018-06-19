@@ -27,6 +27,12 @@ const subscribeFeed = () => {
   eventController.subscribe("miss", data => {
     updateFeed(`${data.opponent.name} missed at ${data.x}, ${data.y}`)
   })
+  eventController.subscribe("victory", data => {
+    updateFeed("you won!")
+  })
+  eventController.subscribe("loss", data => {
+    updateFeed("you lost!")
+  })
 }
 
 subscribeFeed()
