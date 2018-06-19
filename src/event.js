@@ -3,6 +3,13 @@ import { updateFeed } from "./dom"
 const eventController = {
   events: {},
   subscribe: function (eventName, call) {
+    if (typeof call !== "function") {
+      console.error({
+        eventName: eventName,
+        call: call
+      })
+      throw Error("callback is not a function")
+    }
     if (this.events[eventName]) {
       this.events[eventName].push(call)
     } else {

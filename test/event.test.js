@@ -1,5 +1,10 @@
 import eventController from "../src/event"
 
+test("rejects non function callbacks", () => {
+  const testController = Object.create(eventController)
+  expect(() => testController.subscribe("test", "t")).toThrow()
+})
+
 test("tracks subscriptions", () => {
   const testController = Object.create(eventController)
   const callback = () => {}
