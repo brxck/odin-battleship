@@ -1,8 +1,6 @@
 @import url(https://cdn.rawgit.com/tonsky/FiraCode/1.205/distr/fira_code.css);
 
 /* Coolors Exported Palette - coolors.co/152614-1e441e-2a7221-119822-31cb00 */
-
-/* HSL */
 $color1: hsla(117%, 31%, 11%, 1);
 $color2: hsla(120%, 39%, 19%, 1);
 $color3: hsla(113%, 55%, 29%, 1);
@@ -72,13 +70,19 @@ td {
   width: 10%;
 }
 
-td:hover {
+#opponent td:hover {
   background-color: $color3;
 }
 
 .ship {
+  cursor: grab;
   background-color: $color3;
   height: 100%;
+  z-index: 2;
+}
+
+td .ship:hover {
+  background-color: $color4;
 }
 
 .peg {
