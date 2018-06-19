@@ -1,5 +1,30 @@
 import eventController from "./event"
 
+const HitTracker = () => {
+  return {
+    log: {},
+    store: function (x, y) {
+      this.log[`${x}-${y}`] = true
+    },
+    search: function (x, y) {
+      if (this.log[`${x}-${y}`] !== undefined) {
+        return this.log[`${x}-${y}`]
+      }
+    },
+    retrieve: function (x, y) {
+      if (this.log[`${x}-${y}`] !== undefined) {
+        this.log[`${x}-${y}`] = false
+        return this.log[`${x}-${y}`]
+      }
+    },
+    iterate: function (callback) {
+      for (let item in this.log) {
+        callback(this.log[item], item.split("-")[0], item.split("-")[1])
+      }
+    }
+  }
+}
+
 const Gameboard = size => {
   if (!size) {
     throw Error("Gameboard must have size")
@@ -18,8 +43,8 @@ const Gameboard = size => {
     size: size,
     board: board,
     ships: [],
-    misses: [],
-    hits: [],
+    misses: HitTracker(),
+    hits: HitTracker(),
     opponent: undefined,
 
     onBoard: function (x, y) {
@@ -110,9 +135,12 @@ const Gameboard = size => {
     },
 
     receiveAttack: function (x, y) {
+      if (this.hits.search(x, y) || this.misses.search(x, y)) {
+        return false
+      }
       const square = this.cell(x, y)
       if (square === 0) {
-        this.misses.push([x, y, true])
+        this.misses.store(x, y)
         eventController.publish("miss", {
           x: x,
           y: y,
@@ -122,7 +150,7 @@ const Gameboard = size => {
         return false
       } else if (square.ship) {
         square.ship.hit(square.index)
-        this.hits.push([x, y, true])
+        this.hits.store(x, y)
         eventController.publish("hit", {
           x: x,
           y: y,

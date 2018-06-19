@@ -103,10 +103,8 @@ test("sends attack to ship", () => {
 test("tracks missed attacks", () => {
   const gameboard = Gameboard(3)
   gameboard.receiveAttack(0, 0)
-  gameboard.receiveAttack(1, 1)
-  gameboard.receiveAttack(2, 2)
 
-  expect(gameboard.misses).toEqual([[0, 0], [1, 1], [2, 2]])
+  expect(gameboard.misses.search(0, 0)).toEqual(true)
 })
 
 test("reports all ships sunk", () => {

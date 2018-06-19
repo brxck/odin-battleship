@@ -44,22 +44,22 @@ const renderShips = (gameboard, view) => {
 }
 
 const renderPegs = (gameboard, view) => {
-  gameboard.hits.forEach(hit => {
-    if (hit[2] === true) {
+  gameboard.hits.iterate((hit, x, y) => {
+    if (hit === true) {
       let pegElement = createElement("div", {
         className: "peg hit"
       })
-      view.querySelector(`#x${hit[0]}y${hit[1]}`).append(pegElement)
-      hit[2] = false
+      view.querySelector(`#x${x}y${y}`).append(pegElement)
+      hit = false
     }
   })
-  gameboard.misses.forEach(miss => {
-    if (miss[2] === true) {
+  gameboard.misses.iterate((miss, x, y) => {
+    if (miss === true) {
       let pegElement = createElement("div", {
         className: "peg miss"
       })
-      view.querySelector(`#x${miss[0]}y${miss[1]}`).append(pegElement)
-      miss[2] = false
+      view.querySelector(`#x${x}y${y}`).append(pegElement)
+      miss = false
     }
   })
 }
