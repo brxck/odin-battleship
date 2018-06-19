@@ -118,6 +118,7 @@ const Gameboard = size => {
           y: y,
           opponent: this.opponent
         })
+        eventController.publish("turn")
         return false
       } else if (square.ship) {
         square.ship.hit(square.index)
@@ -128,11 +129,12 @@ const Gameboard = size => {
           sunk: square.ship.isSunk(),
           opponent: this.opponent
         })
+        eventController.publish("turn")
         return true
       }
     },
 
-    allShipsSunk: function () {
+    allSunk: function () {
       let allSunk = true
       this.ships.forEach(ship => {
         if (!ship.isSunk()) {

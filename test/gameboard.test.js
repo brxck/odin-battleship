@@ -116,8 +116,8 @@ test("reports all ships sunk", () => {
   gameboard.place(smallShip, 0, 1, "v")
   gameboard.place(largeShip, 0, 0, "h")
 
-  expect(gameboard.allShipsSunk()).toEqual(false)
+  expect(gameboard.allSunk()).toEqual(false)
 
   largeShip.isSunk = () => true
-  expect(gameboard.allShipsSunk()).toEqual(true)
+  expect(gameboard.allSunk()).toEqual(true)
 })
