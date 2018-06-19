@@ -1,3 +1,5 @@
+import { updateFeed } from "./dom"
+
 const eventController = {
   events: {},
   subscribe: function (eventName, call) {
@@ -17,5 +19,16 @@ const eventController = {
     }
   }
 }
+
+const subscribeFeed = () => {
+  eventController.subscribe("hit", data => {
+    updateFeed(`${data.opponent.name} hit at ${data.x}, ${data.y}`)
+  })
+  eventController.subscribe("miss", data => {
+    updateFeed(`${data.opponent.name} missed at ${data.x}, ${data.y}`)
+  })
+}
+
+subscribeFeed()
 
 export default eventController

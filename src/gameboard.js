@@ -1,3 +1,5 @@
+import eventController from "./event"
+
 const Gameboard = size => {
   if (!size) {
     throw Error("Gameboard must have size")
@@ -18,6 +20,7 @@ const Gameboard = size => {
     ships: [],
     misses: [],
     hits: [],
+    opponent: undefined,
 
     onBoard: function (x, y) {
       if (this.board[x] !== undefined && this.board[x][y] !== undefined) {
@@ -110,10 +113,21 @@ const Gameboard = size => {
       const square = this.cell(x, y)
       if (square === 0) {
         this.misses.push([x, y])
+        eventController.publish("miss", {
+          x: x,
+          y: y,
+          opponent: this.opponent
+        })
         return false
       } else if (square.ship) {
         square.ship.hit(square.index)
         this.hits.push([x, y])
+        eventController.publish("hit", {
+          x: x,
+          y: y,
+          sunk: square.ship.isSunk(),
+          opponent: this.opponent
+        })
         return true
       }
     },

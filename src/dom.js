@@ -53,6 +53,12 @@ const renderShips = (gameboard, view) => {
 //   })
 // }
 
+const updateFeed = message => {
+  const feed = document.getElementById("feed")
+  const messageElement = createElement("p", { textContent: "> " + message })
+  feed.prepend(messageElement)
+}
+
 const createElement = (tag, properties) => {
   const element = document.createElement(tag)
 
@@ -70,4 +76,4 @@ const createElement = (tag, properties) => {
   return element
 }
 
-export { renderBoard, renderShips }
+export { renderBoard, renderShips, updateFeed }

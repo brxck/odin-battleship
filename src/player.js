@@ -29,6 +29,7 @@ const Player = (name, gameboard, antiBoard) => {
     }
   }
 
+  antiBoard.opponent = newPlayer
   return newPlayer
 }
 
