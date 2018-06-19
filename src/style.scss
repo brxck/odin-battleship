@@ -39,7 +39,7 @@ body {
     "player opponent";
   height: 100%;
   max-width: 45vw;
-  margin: auto;
+  margin: 10vh auto;
 }
 
 #player {
@@ -104,4 +104,8 @@ td:hover {
   height: inherit;
   font-size: 0.9em;
   overflow: hidden;
+}
+
+#feed :first-child {
+  color: $color5;
 }
