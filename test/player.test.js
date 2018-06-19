@@ -30,6 +30,20 @@ test("unsuccessful move returns false", () => {
   expect(player.attack(5, 5)).toEqual(false)
 })
 
+test("registers victory", () => {
+  const antiBoard = { allSunk: () => true }
+  const player = Player("x", {}, antiBoard)
+
+  expect(player.won()).toEqual(true)
+})
+
+test("registers loss", () => {
+  const board = { allSunk: () => true }
+  const player = Player("x", board, {})
+
+  expect(player.lost()).toEqual(true)
+})
+
 test.skip("moves randomly", () => {
   const player = Player("x", {}, {})
   const board = Gameboard(3)
