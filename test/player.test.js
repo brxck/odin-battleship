@@ -2,6 +2,8 @@ import Player from "../src/player"
 import { Ship } from "../src/ship"
 import Gameboard from "../src/gameboard"
 
+jest.mock("../src/event")
+
 test("has name and board", () => {
   const player = Player("Marvin", {}, {})
 

@@ -1,6 +1,8 @@
 import Gameboard from "../src/gameboard"
 import { Ship } from "../src/ship"
 
+jest.mock("../src/event")
+
 test("has size", () => {
   const gameboard = Gameboard(10)
   expect(gameboard.size).toEqual(10)
