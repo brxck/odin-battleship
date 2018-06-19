@@ -1,5 +1,10 @@
-const Ship = length => {
+const Ship = (length, name) => {
+  if (!length) {
+    throw Error("ship requires length")
+  }
+
   return {
+    name: name,
     length: length,
     hits: new Array(length).fill(0),
     hit: function (index) {
@@ -21,4 +26,16 @@ const Ship = length => {
   }
 }
 
-export default Ship
+const Fleet = () => {
+  return [
+    Ship(5, "carrier"),
+    Ship(4, "battleship"),
+    Ship(3, "cruiser"),
+    Ship(2, "destroyer"),
+    Ship(2, "destroyer"),
+    Ship(1, "submarine"),
+    Ship(1, "submarine")
+  ]
+}
+
+export { Ship, Fleet }

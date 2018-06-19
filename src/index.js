@@ -1,25 +1,21 @@
 import "./style.scss"
-import { renderBoard, renderShips } from "./dom"
 import Gameboard from "./gameboard"
-import Ship from "./ship"
+import { Fleet } from "./ship"
+import Player from "./player"
+import { renderBoard, renderShips } from "./dom"
 
 const playerView = document.getElementById("player")
 const opponentView = document.getElementById("opponent")
 
 const gameLoop = () => {
-  const playerBoard = Gameboard(10)
-  const opponentBoard = Gameboard(10)
-  const playerShips = [Ship(2), Ship(3), Ship(5)]
-  const opponentShips = [Ship(2), Ship(3), Ship(5)]
-  opponentBoard.placeRandom(opponentShips)
-  playerBoard.placeRandom(playerShips)
-  renderBoard(playerBoard, playerView)
-  renderBoard(opponentBoard, opponentView)
-  renderShips(playerBoard, playerView)
+  const boardOne = Gameboard(10).placeRandom(Fleet())
+  const boardTwo = Gameboard(10).placeRandom(Fleet())
+  const playerOne = Player("human", boardOne, boardTwo)
+  const playerTwo = Player("computer", boardTwo, boardOne)
+  renderBoard(playerOne.gameboard, playerView)
+  renderBoard(playerTwo.gameboard, opponentView)
+  renderShips(playerOne, playerView)
   // renderShips(opponentBoard, opponentView)
-
-  console.log(opponentBoard)
-  console.log(playerBoard)
 }
 
 gameLoop()
