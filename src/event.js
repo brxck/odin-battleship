@@ -1,4 +1,4 @@
-import { updateFeed } from "./dom"
+import { updateFeed, renderFeed } from "./dom"
 
 let sunk = false
 
@@ -65,6 +65,14 @@ const subscribeFeed = () => {
   })
   eventController.subscribe("sunk", () => {
     sunk = true
+  })
+  eventController.subscribe("setup", () => {
+    updateFeed("|> position your fleet")
+    renderFeed()
+    setTimeout(() => {
+      updateFeed("|> and start firing!")
+      renderFeed()
+    }, 1000)
   })
 }
 

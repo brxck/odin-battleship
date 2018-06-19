@@ -21,6 +21,8 @@ renderBoard(computer, player, opponentView)
 renderShips(player, playerView)
 // renderShips(computer, opponentView)
 
+eventController.publish("setup")
+
 eventController.subscribe("turn", () => {
   renderPegs(boardOne, playerView)
   renderPegs(boardTwo, opponentView)
