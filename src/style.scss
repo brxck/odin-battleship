@@ -54,6 +54,18 @@ td {
 }
 
 .ship {
-  background-color: white;
+  background-color: black;
   height: 100%;
+}
+
+.peg {
+  height: 100%;
+}
+
+.peg.hit {
+  background-color: red;
+}
+
+.peg.miss {
+  background-color: white;
 }

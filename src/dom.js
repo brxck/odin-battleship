@@ -43,15 +43,26 @@ const renderShips = (gameboard, view) => {
   gameboard.iterate(createShipElement)
 }
 
-// const renderPegs = (gameboard, view) => {
-//   gameboard.hits.forEach(hit => {
-//     const pegElement = document.createElement("div", {
-//       className: "peg hit",
-//       "style.height": "100%",
-//       "style.width": "100%"
-//     })
-//   })
-// }
+const renderPegs = (gameboard, view) => {
+  gameboard.hits.forEach(hit => {
+    if (hit[2] === true) {
+      let pegElement = createElement("div", {
+        className: "peg hit"
+      })
+      view.querySelector(`#x${hit[0]}y${hit[1]}`).append(pegElement)
+      hit[2] = false
+    }
+  })
+  gameboard.misses.forEach(miss => {
+    if (miss[2] === true) {
+      let pegElement = createElement("div", {
+        className: "peg miss"
+      })
+      view.querySelector(`#x${miss[0]}y${miss[1]}`).append(pegElement)
+      miss[2] = false
+    }
+  })
+}
 
 const updateFeed = message => {
   const feed = document.getElementById("feed")
@@ -76,4 +87,4 @@ const createElement = (tag, properties) => {
   return element
 }
 
-export { renderBoard, renderShips, updateFeed }
+export { renderBoard, renderShips, updateFeed, renderPegs }

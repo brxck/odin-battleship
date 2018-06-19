@@ -112,7 +112,7 @@ const Gameboard = size => {
     receiveAttack: function (x, y) {
       const square = this.cell(x, y)
       if (square === 0) {
-        this.misses.push([x, y])
+        this.misses.push([x, y, true])
         eventController.publish("miss", {
           x: x,
           y: y,
@@ -122,7 +122,7 @@ const Gameboard = size => {
         return false
       } else if (square.ship) {
         square.ship.hit(square.index)
-        this.hits.push([x, y])
+        this.hits.push([x, y, true])
         eventController.publish("hit", {
           x: x,
           y: y,
