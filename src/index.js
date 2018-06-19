@@ -20,8 +20,6 @@ const gameLoop = () => {
   renderBoard(boardTwo, opponentView)
   renderShips(boardOne, playerView)
   renderShips(boardTwo, opponentView)
-
-  // game loop
 }
 
 gameLoop()
