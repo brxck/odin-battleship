@@ -1,14 +1,19 @@
-const Player = (name, gameboard) => {
-  if (!name || !gameboard) {
+const Player = (name, gameboard, antiBoard) => {
+  if (!name || !gameboard || !antiBoard) {
     throw Error("player missing arguments")
   }
   const newPlayer = {
     name: name,
     gameboard: gameboard,
+    antiBoard: antiBoard,
 
-    attack: function (gameboard, x, y) {
-      if (gameboard.onBoard(x, y)) {
-        gameboard.receiveAttack(x, y)
+    attack: function (x, y) {
+      if (antiBoard.onBoard(x, y)) {
+        if (antiBoard.receiveAttack(x, y)) {
+          console.log("hit")
+        } else {
+          console.log("miss")
+        }
         return true
       } else {
         return false
