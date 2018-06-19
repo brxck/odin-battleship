@@ -17,6 +17,7 @@ const Gameboard = size => {
     board: board,
     ships: [],
     misses: [],
+    hits: [],
 
     onBoard: function (x, y) {
       if (this.board[x] !== undefined && this.board[x][y] !== undefined) {
@@ -40,6 +41,15 @@ const Gameboard = size => {
         return this.board[x][y]
       } else {
         console.error("no such square", [x, y])
+      }
+    },
+
+    iterate: function (cellCallback = () => {}, rowCallback = () => {}) {
+      for (let y = 0; y < this.size; y++) {
+        rowCallback(this.board[y], y)
+        for (let x = 0; x < this.size; x++) {
+          cellCallback(this.board[x][y], x, y)
+        }
       }
     },
 
@@ -103,6 +113,7 @@ const Gameboard = size => {
         return false
       } else if (square.ship) {
         square.ship.hit(square.index)
+        this.hits.push([x, y])
         return true
       }
     },

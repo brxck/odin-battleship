@@ -36,6 +36,20 @@ test("doesn't return offboard square", () => {
   expect(gameboard.cell(5, 3)).toEqual(undefined)
 })
 
+test("iterates over board", () => {
+  const gameboard = Gameboard(3)
+  const result = []
+  const cellCallback = (cell, x) => {
+    result.push(x)
+  }
+  const rowCallback = (row, y) => {
+    result.push(y)
+  }
+
+  gameboard.iterate(cellCallback, rowCallback)
+  expect(result).toEqual([0, 0, 1, 2, 1, 0, 1, 2, 2, 0, 1, 2])
+})
+
 test("places ship horizontally", () => {
   const ship = { length: 3 }
   const gameboard = Gameboard(3)
