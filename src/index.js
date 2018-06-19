@@ -9,11 +9,16 @@ const opponentView = document.getElementById("opponent")
 const gameLoop = () => {
   const playerBoard = Gameboard(10)
   const opponentBoard = Gameboard(10)
-  const ships = [Ship(2), Ship(3), Ship(5)]
-  opponentBoard.placeRandom(ships)
-  playerBoard.placeRandom(ships)
+  const playerShips = [Ship(2), Ship(3), Ship(5)]
+  const opponentShips = [Ship(2), Ship(3), Ship(5)]
+  opponentBoard.placeRandom(opponentShips)
+  playerBoard.placeRandom(playerShips)
   render(playerBoard, playerView)
   render(opponentBoard, opponentView)
+
+  opponentBoard.addEventListener("click", () =>
+    render(opponentBoard, opponentView)
+  )
 
   console.log(opponentBoard)
   console.log(playerBoard)

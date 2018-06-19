@@ -5,6 +5,7 @@ const Ship = length => {
     hit: function (index) {
       if (index >= 0 && index < length) {
         this.hits[index] = 1
+        console.log("hit!", this)
       } else if (process.env.NODE_ENV !== "test") {
         console.error("hit index out of ship range")
       }

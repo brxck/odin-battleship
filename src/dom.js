@@ -5,6 +5,10 @@ const render = (gameboard, view) => {
   renderShips(gameboard, view)
 }
 
+const attackElement = (x, y, gameboard) => {
+  gameboard.receiveAttack(x, y)
+}
+
 const composeBoard = gameboard => {
   const boardElement = createElement("table")
 
@@ -14,6 +18,7 @@ const composeBoard = gameboard => {
 
     for (let x = 0; x < gameboard.size; x++) {
       const cell = createElement("td", { id: `x${x}y${y}` })
+      cell.addEventListener("click", () => attackElement(x, y, gameboard))
       row.appendChild(cell)
     }
   }
@@ -21,20 +26,38 @@ const composeBoard = gameboard => {
 }
 
 const renderShips = (gameboard, view) => {
-  for (let y = 0; y < gameboard.size; y++) {
-    for (let x = 0; x < gameboard.size; x++) {
-      if (gameboard.cell(x, y).ship) {
-        const cellElement = view.querySelector(`#x${x}y${y}`)
-        const shipElement = createElement("div", {
-          className: "ship",
-          "style.height": "100%",
-          "style.width": "100%"
-        })
-        cellElement.appendChild(shipElement)
+  const createShipElement = (cell, x, y) => {
+    if (cell.ship !== undefined && cell.index === 0) {
+      const ship = cell.ship
+      const cellElement = view.querySelector(`#x${x}y${y}`)
+      let width, height
+      if (ship.direction === "h") {
+        width = `calc(${100 * cell.ship.length}% + ${cell.ship.length}px)`
+        height = "100%"
+      } else if (ship.direction === "v") {
+        width = "100%"
+        height = `calc(${100 * cell.ship.length}% + ${cell.ship.length}px)`
       }
+      const shipElement = createElement("div", {
+        className: "ship",
+        "style.height": height,
+        "style.width": width
+      })
+      cellElement.appendChild(shipElement)
     }
   }
+  gameboard.iterate(createShipElement)
 }
+
+// const renderPegs = (gameboard, view) => {
+//   gameboard.hits.forEach(hit => {
+//     const pegElement = document.createElement("div", {
+//       className: "peg hit",
+//       "style.height": "100%",
+//       "style.width": "100%"
+//     })
+//   })
+// }
 
 const createElement = (tag, properties) => {
   const element = document.createElement(tag)
