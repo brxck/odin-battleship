@@ -1,5 +1,7 @@
 import { updateFeed } from "./dom"
 
+let sunk = false
+
 const eventController = {
   events: {},
   subscribe: function (eventName, call) {
@@ -32,13 +34,23 @@ const eventController = {
 
 const subscribeFeed = () => {
   eventController.subscribe("playerHit", data => {
-    updateFeed(`${data.x}, ${data.y} |> we got 'em!`)
+    if (sunk === true) {
+      updateFeed(`${data.x}, ${data.y} |> we sunk one!`)
+    } else {
+      updateFeed(`${data.x}, ${data.y} |> we hit 'em!`)
+    }
+    sunk = false
   })
   eventController.subscribe("playerMiss", data => {
     updateFeed(`${data.x}, ${data.y} |> we missed.`)
   })
   eventController.subscribe("cpuHit", data => {
-    updateFeed(`${data.x}, ${data.y} |> we're hit!`)
+    if (sunk === true) {
+      updateFeed(`${data.x}, ${data.y} |> we lost a ship!`)
+    } else {
+      updateFeed(`${data.x}, ${data.y} |> we're hit!`)
+    }
+    sunk = false
   })
   eventController.subscribe("cpuMiss", data => {
     updateFeed(`${data.x}, ${data.y} <| they missed us.`)
@@ -50,6 +62,9 @@ const subscribeFeed = () => {
   eventController.subscribe("loss", data => {
     updateFeed("<| we've lost the fleet!")
     updateFeed("<~ G A M E <> O V E R ~>")
+  })
+  eventController.subscribe("sunk", () => {
+    sunk = true
   })
 }
 

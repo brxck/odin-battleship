@@ -19,7 +19,7 @@ const computer = Player("cpu", boardTwo, boardOne)
 renderBoard(player, computer, playerView)
 renderBoard(computer, player, opponentView)
 renderShips(player, playerView)
-// renderShips(computer, opponentView)
+renderShips(computer, opponentView)
 
 eventController.subscribe("turn", () => {
   renderPegs(boardOne, playerView)

@@ -1,3 +1,5 @@
+import eventController from "./event"
+
 const Ship = (length, name) => {
   if (!length) {
     throw Error("ship requires length")
@@ -10,6 +12,9 @@ const Ship = (length, name) => {
     hit: function (index) {
       if (index >= 0 && index < length) {
         this.hits[index] = 1
+        if (this.isSunk()) {
+          eventController.publish("sunk")
+        }
       } else if (process.env.NODE_ENV !== "test") {
         console.error("hit index out of ship range")
       }
