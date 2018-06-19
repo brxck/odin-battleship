@@ -3,7 +3,7 @@ import Gameboard from "./gameboard"
 import Player from "./player"
 import eventController from "./event"
 import { Fleet } from "./ship"
-import { renderBoard, renderShips, renderPegs } from "./dom"
+import { renderBoard, renderShips, renderPegs, renderFeed } from "./dom"
 
 process.env.DEBUG = false
 
@@ -24,12 +24,15 @@ renderShips(player, playerView)
 eventController.subscribe("turn", () => {
   renderPegs(boardOne, playerView)
   renderPegs(boardTwo, opponentView)
+  renderFeed()
   if (player.won()) {
     eventController.publish("victory")
   } else if (player.lost()) {
     eventController.publish("loss")
   }
+  computer.randomAttack()
   setTimeout(() => {
-    computer.randomAttack()
-  }, 500)
+    renderPegs(boardOne, playerView)
+    renderFeed()
+  }, 1000)
 })

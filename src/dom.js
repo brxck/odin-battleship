@@ -68,10 +68,18 @@ const renderPegs = (gameboard, view) => {
   })
 }
 
+const feedQueue = []
+
 const updateFeed = message => {
-  const feed = document.getElementById("feed")
   const messageElement = createElement("p", { textContent: message })
-  feed.prepend(messageElement)
+  feedQueue.push(messageElement)
+}
+
+const renderFeed = () => {
+  const feed = document.getElementById("feed")
+  feedQueue.forEach(messageElement => {
+    feed.prepend(messageElement)
+  })
 }
 
 const createElement = (tag, properties) => {
@@ -91,4 +99,4 @@ const createElement = (tag, properties) => {
   return element
 }
 
-export { renderBoard, renderShips, updateFeed, renderPegs }
+export { renderBoard, renderShips, updateFeed, renderPegs, renderFeed }
