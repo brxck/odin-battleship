@@ -46,6 +46,7 @@ table {
 }
 
 td {
+  position: relative;
   border: 1px solid whitesmoke;
   margin: 0;
   padding: 0;
@@ -59,7 +60,12 @@ td {
 }
 
 .peg {
+  position: absolute;
   height: 100%;
+  width: 100%;
+  z-index: 2;
+  left: 0;
+  top: 0;
 }
 
 .peg.hit {
