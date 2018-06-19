@@ -1,7 +1,7 @@
-import EventController from "../src/event"
+import eventController from "../src/event"
 
 test("tracks subscriptions", () => {
-  const testController = EventController()
+  const testController = Object.create(eventController)
   const callback = () => {}
 
   testController.subscribe("test", callback)
@@ -9,7 +9,7 @@ test("tracks subscriptions", () => {
 })
 
 test("call subscriptions on publish", () => {
-  const testController = EventController()
+  const testController = Object.create(eventController)
   const testObject = { success: false }
   const callback = () => (testObject.success = true)
 
