@@ -1,8 +1,9 @@
-const attackElement = (x, y, gameboard) => {
-  gameboard.receiveAttack(x, y)
+const attackElement = (x, y, opponent) => {
+  opponent.attack(x, y)
 }
 
-const renderBoard = (gameboard, view) => {
+const renderBoard = (player, opponent, view) => {
+  const gameboard = player.gameboard
   const boardElement = createElement("table")
 
   for (let y = 0; y < gameboard.size; y++) {
@@ -11,7 +12,9 @@ const renderBoard = (gameboard, view) => {
 
     for (let x = 0; x < gameboard.size; x++) {
       const cell = createElement("td", { id: `x${x}y${y}` })
-      cell.addEventListener("click", () => attackElement(x, y, gameboard))
+      if (player.name === "cpu") {
+        cell.addEventListener("click", () => attackElement(x, y, opponent))
+      }
       row.appendChild(cell)
     }
   }
@@ -19,7 +22,8 @@ const renderBoard = (gameboard, view) => {
   view.appendChild(boardElement)
 }
 
-const renderShips = (gameboard, view) => {
+const renderShips = (player, view) => {
+  const gameboard = player.gameboard
   const createShipElement = (cell, x, y) => {
     if (cell.ship !== undefined && cell.index === 0) {
       const ship = cell.ship

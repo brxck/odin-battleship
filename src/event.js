@@ -31,23 +31,17 @@ const eventController = {
 }
 
 const subscribeFeed = () => {
-  eventController.subscribe("hit", data => {
-    let message
-    if (data.opponent.name === "player") {
-      message = `${data.x}, ${data.y} |> we got 'em!`
-    } else {
-      message = `${data.x}, ${data.y} <| we're hit!`
-    }
-    updateFeed(message)
+  eventController.subscribe("playerHit", data => {
+    updateFeed(`${data.x}, ${data.y} |> we got 'em!`)
   })
-  eventController.subscribe("miss", data => {
-    let message
-    if (data.opponent.name === "player") {
-      message = `${data.x}, ${data.y} |> we missed.`
-    } else {
-      message = `${data.x}, ${data.y} <| they missed us that time.`
-    }
-    updateFeed(message)
+  eventController.subscribe("playerMiss", data => {
+    updateFeed(`${data.x}, ${data.y} |> we missed.`)
+  })
+  eventController.subscribe("cpuHit", data => {
+    updateFeed(`${data.x}, ${data.y} |> we're hit!`)
+  })
+  eventController.subscribe("cpuMiss", data => {
+    updateFeed(`${data.x}, ${data.y} <| they missed us.`)
   })
   eventController.subscribe("victory", data => {
     updateFeed("|> we've sunk their fleet!")

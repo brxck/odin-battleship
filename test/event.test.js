@@ -19,7 +19,6 @@ test("call subscriptions on publish", () => {
   const callback = () => (testObject.success = true)
 
   testController.subscribe("test", callback)
-  console.log(testController.events)
   testController.publish("test")
   expect(testObject.success).toEqual(true)
 })

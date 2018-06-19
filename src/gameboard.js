@@ -1,5 +1,3 @@
-import eventController from "./event"
-
 const HitTracker = () => {
   return {
     log: {},
@@ -117,9 +115,7 @@ const Gameboard = size => {
     },
 
     placeRandom: function (ships) {
-      console.log("ships", ships)
       ships.forEach(ship => {
-        console.log("placing ship", ship)
         const direction = Math.random() < 0.5 ? "h" : "v"
         let x, y
         do {
@@ -141,23 +137,10 @@ const Gameboard = size => {
       const square = this.cell(x, y)
       if (square === 0) {
         this.misses.store(x, y)
-        eventController.publish("miss", {
-          x: x,
-          y: y,
-          opponent: this.opponent
-        })
-        eventController.publish("turn")
         return false
       } else if (square.ship) {
         square.ship.hit(square.index)
         this.hits.store(x, y)
-        eventController.publish("hit", {
-          x: x,
-          y: y,
-          sunk: square.ship.isSunk(),
-          opponent: this.opponent
-        })
-        eventController.publish("turn")
         return true
       }
     },

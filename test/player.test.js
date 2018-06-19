@@ -43,10 +43,3 @@ test("registers loss", () => {
 
   expect(player.lost()).toEqual(true)
 })
-
-test.skip("moves randomly", () => {
-  const player = Player("x", {}, {})
-  const board = Gameboard(3)
-
-  expect(player.randomAttack())
-})

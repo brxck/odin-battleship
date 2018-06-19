@@ -10,26 +10,23 @@ process.env.DEBUG = true
 const playerView = document.getElementById("player")
 const opponentView = document.getElementById("opponent")
 
-const loop = { continue: true }
-
 const boardOne = Gameboard(10)
 const boardTwo = Gameboard(10)
 boardOne.placeRandom(Fleet())
 boardTwo.placeRandom(Fleet())
-const playerOne = Player("player", boardOne, boardTwo)
-const playerTwo = Player("opponent", boardTwo, boardOne)
-renderBoard(boardOne, playerView)
-renderBoard(boardTwo, opponentView)
-renderShips(boardOne, playerView)
-// renderShips(boardTwo, opponentView)
+const player = Player("player", boardOne, boardTwo)
+const computer = Player("cpu", boardTwo, boardOne)
+renderBoard(player, computer, playerView)
+renderBoard(computer, player, opponentView)
+renderShips(player, playerView)
+// renderShips(computer, opponentView)
+
 eventController.subscribe("turn", () => {
-  console.log("next loop")
   renderPegs(boardOne, playerView)
   renderPegs(boardTwo, opponentView)
-  if (playerOne.won()) {
+  if (player.won()) {
     eventController.publish("victory")
-  } else if (playerOne.lost()) {
+  } else if (player.lost()) {
     eventController.publish("loss")
   }
-  loop.continue = false
 })
