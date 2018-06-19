@@ -21,6 +21,12 @@ body {
   text-align: center;
 }
 
+#captain {
+  border: solid 2px $color3;
+  background-color: $color1;
+  margin-left: auto;
+}
+
 /* CSS Grid */
 
 .container {
@@ -46,6 +52,7 @@ body {
 
 #controls {
   grid-area: controls;
+  overflow: hidden;
 }
 
 /* Board */
@@ -94,5 +101,7 @@ td:hover {
 /* UI */
 
 #feed {
+  height: inherit;
   font-size: 0.9em;
+  overflow: hidden;
 }
