@@ -82,6 +82,24 @@ test("won't place ship offboard", () => {
   expect(gameboard.board).toEqual(Gameboard(3).board)
 })
 
+test("moves ship", () => {
+  const ship = { length: 3 }
+  const gameboard = Gameboard(3)
+
+  gameboard.place(ship, 0, 2, "h")
+  gameboard.move(0, 2, 0, 0)
+  expect(gameboard.cell(0, 0)).toMatchObject({ ship: ship, index: 0 })
+})
+
+test("rotates ship", () => {
+  const ship = { length: 3 }
+  const gameboard = Gameboard(3)
+
+  gameboard.place(ship, 0, 0, "h")
+  gameboard.rotate(0, 0)
+  expect(gameboard.cell(0, 2)).toMatchObject({ ship: ship, index: 2 })
+})
+
 test("returns attack outcome", () => {
   const ship = Ship(3)
   const gameboard = Gameboard(3)
