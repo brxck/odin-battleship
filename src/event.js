@@ -42,6 +42,11 @@ const subscribeFeed = () => {
     updateFeed(`${data.x}, ${data.y} |> we missed.`)
   })
   eventController.subscribe("cpuHit", data => {
+    document.getElementById("captain").classList.add("shake")
+    setTimeout(
+      () => document.getElementById("captain").classList.remove("shake"),
+      500
+    )
     if (sunk === true) {
       updateFeed(`${data.x}, ${data.y} |> we lost a ship!`)
     } else {
