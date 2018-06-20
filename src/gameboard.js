@@ -136,8 +136,12 @@ const Gameboard = size => {
         throw Error("no ship to move")
       }
 
-      this.remove(ship)
-      return this.place(ship, x1, y1, ship.direction)
+      if (this.gatherSpaces(ship, x1, y1, ship.direction) !== false) {
+        this.remove(ship)
+        return this.place(ship, x1, y1, ship.direction)
+      } else {
+        return false
+      }
     },
 
     rotate: function (x, y) {
