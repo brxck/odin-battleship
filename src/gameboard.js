@@ -1,3 +1,5 @@
+import { isFlowBaseAnnotation } from "babel-types"
+
 const HitTracker = () => {
   return {
     log: {},
@@ -79,16 +81,26 @@ const Gameboard = size => {
       }
     },
 
+    available: function (ship, x, y) {
+      if (this.cell(x, y) === undefined) {
+        return false
+      } else if (this.cell(x, y) === 0 || this.cell(x, y).ship === ship) {
+        return true
+      } else {
+        return false
+      }
+    },
+
     gatherSpaces: function (ship, x, y, direction) {
       const pairs = []
       for (let i = 0; i < ship.length; i++) {
         if (direction === "h") {
-          if (this.cell(x + i, y) !== 0) {
+          if (!this.available(ship, x + i, y)) {
             return false
           }
           pairs.push({ x: x + i, y: y })
         } else if (direction === "v") {
-          if (this.cell(x, y + i) !== 0) {
+          if (!this.available(ship, x, y + i)) {
             return false
           }
           pairs.push({ x: x, y: y + i })
@@ -122,7 +134,7 @@ const Gameboard = size => {
         if (ship.direction === "h") {
           this.setSquare(ship.x + i, ship.y, 0)
         } else if (ship.direction === "v") {
-          this.setSquare(ship.x + i, ship.y, 0)
+          this.setSquare(ship.x, ship.y + i, 0)
         }
       }
       this.ships.slice(this.ships.indexOf(ship))
@@ -146,28 +158,18 @@ const Gameboard = size => {
       const ship = this.cell(x, y).ship
 
       if (!ship) {
-        throw Error("no ship to move")
+        console.error([x, y])
+        throw Error("no ship to rotate")
       }
 
       const newDirection = ship.direction === "h" ? "v" : "h"
 
-      for (let i = 1; i < ship.length; i++) {
-        if (newDirection === "h") {
-          if (this.cell(x + i, y) !== 0) {
-            return false
-          }
-        } else if (newDirection === "v") {
-          if (this.cell(x, y + i) !== 0) {
-            return false
-          }
-        } else {
-          console.error("invalid direction")
-          return false
-        }
+      if (this.gatherSpaces(ship, x, y, newDirection) !== false) {
+        this.remove(ship)
+        return this.place(ship, x, y, newDirection)
+      } else {
+        return false
       }
-
-      this.remove(ship)
-      return this.place(ship, x, y, newDirection)
     },
 
     placeRandom: function (ships) {

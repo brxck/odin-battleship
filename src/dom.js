@@ -57,6 +57,9 @@ const renderShips = (player, view) => {
         "style.width": width
       })
       shipElement.addEventListener("click", event => {
+        const [, x, y] = event.target.parentNode.id
+          .split("-")
+          .map(item => Number(item))
         if (gameboard.rotate(x, y)) {
           const newWidth = event.target.style.height
           event.target.style.height = event.target.style.width

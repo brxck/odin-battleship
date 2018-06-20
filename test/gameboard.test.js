@@ -84,11 +84,11 @@ test("won't place ship offboard", () => {
 
 test("moves ship", () => {
   const ship = { length: 3 }
-  const gameboard = Gameboard(3)
+  const gameboard = Gameboard(5)
 
   gameboard.place(ship, 0, 2, "h")
-  gameboard.move(0, 2, 0, 0)
-  expect(gameboard.cell(0, 0)).toMatchObject({ ship: ship, index: 0 })
+  gameboard.move(0, 2, 1, 2)
+  expect(gameboard.cell(1, 2)).toMatchObject({ ship: ship, index: 0 })
 })
 
 test("rotates ship", () => {
