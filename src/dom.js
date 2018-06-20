@@ -1,15 +1,4 @@
-import dragula from "dragula"
-
-const drake = dragula({
-  revertOnSpill: true,
-  invalid: function (element, handle) {
-    if (element.classList.contains("ship")) {
-      return false
-    } else {
-      return true
-    }
-  }
-})
+import drag from "./drag"
 
 const attackElement = (x, y, opponent) => {
   opponent.attack(x, y)
@@ -28,7 +17,7 @@ const renderBoard = (player, opponent, view) => {
       if (player.name === "cpu") {
         cell.addEventListener("click", () => attackElement(x, y, opponent))
       }
-      drake.containers.push(cell)
+      drag.containers.push(cell)
       row.appendChild(cell)
     }
   }
@@ -36,13 +25,13 @@ const renderBoard = (player, opponent, view) => {
   view.appendChild(boardElement)
 
   if (player.name === "player") {
-    drake.on("drop", (element, target, source) => {
+    drag.on("drop", (element, target, source) => {
       // Integer string mixups are really fun
       const [, x0, y0] = source.id.split("-").map(item => Number(item))
       const [, x1, y1] = target.id.split("-").map(item => Number(item))
       console.log([x0, y0], [x1, y1])
       if (!player.gameboard.move(x0, y0, x1, y1)) {
-        drake.cancel()
+        drag.cancel()
       }
     })
   }
@@ -126,4 +115,15 @@ const createElement = (tag, properties) => {
   return element
 }
 
-export { renderBoard, renderShips, updateFeed, renderPegs, renderFeed }
+const disableDrag = () => {
+  drag.containers = []
+}
+
+export {
+  renderBoard,
+  renderShips,
+  updateFeed,
+  renderPegs,
+  renderFeed,
+  disableDrag
+}

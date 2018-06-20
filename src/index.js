@@ -3,7 +3,13 @@ import Gameboard from "./gameboard"
 import Player from "./player"
 import eventController from "./event"
 import { Fleet } from "./ship"
-import { renderBoard, renderShips, renderPegs, renderFeed } from "./dom"
+import {
+  renderBoard,
+  renderShips,
+  renderPegs,
+  renderFeed,
+  disableDrag
+} from "./dom"
 
 process.env.DEBUG = false
 
@@ -24,6 +30,7 @@ renderShips(player, playerView)
 eventController.publish("setup")
 
 eventController.subscribe("turn", () => {
+  disableDrag()
   renderPegs(boardOne, playerView)
   renderPegs(boardTwo, opponentView)
   renderFeed()
