@@ -96,7 +96,7 @@ test("rotates ship", () => {
   const gameboard = Gameboard(3)
 
   gameboard.place(ship, 0, 0, "h")
-  gameboard.rotate(0, 0)
+  expect(gameboard.rotate(0, 0)).toEqual(true)
   expect(gameboard.cell(0, 2)).toMatchObject({ ship: ship, index: 2 })
 })
 

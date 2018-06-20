@@ -57,6 +57,13 @@ const renderShips = (player, view) => {
         "style.height": height,
         "style.width": width
       })
+      shipElement.addEventListener("click", event => {
+        if (gameboard.rotate(x, y)) {
+          const newWidth = event.target.style.height
+          event.target.style.height = event.target.style.width
+          event.target.style.width = newWidth
+        }
+      })
       cellElement.appendChild(shipElement)
     }
   }

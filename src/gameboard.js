@@ -91,6 +91,8 @@ const Gameboard = size => {
           pairs.push({ x: x + i, y: y })
         } else if (direction === "v") {
           if (this.cell(x, y + i) !== 0) {
+            console.log("xy", [x, y, i])
+            console.log("cell", this.cell(x, y + i))
             return false
           }
           pairs.push({ x: x, y: y + i })
@@ -146,12 +148,30 @@ const Gameboard = size => {
 
     rotate: function (x, y) {
       const ship = this.cell(x, y).ship
+
       if (!ship) {
         throw Error("no ship to move")
       }
 
+      const newDirection = ship.direction === "h" ? "v" : "h"
+
+      for (let i = 1; i < ship.length; i++) {
+        if (newDirection === "h") {
+          if (this.cell(x + i, y) !== 0) {
+            return false
+          }
+        } else if (newDirection === "v") {
+          if (this.cell(x, y + i) !== 0) {
+            return false
+          }
+        } else {
+          console.error("invalid direction")
+          return false
+        }
+      }
+
       this.remove(ship)
-      this.place(ship, x, y, ship.direction === "h" ? "v" : "h")
+      return this.place(ship, x, y, newDirection)
     },
 
     placeRandom: function (ships) {
