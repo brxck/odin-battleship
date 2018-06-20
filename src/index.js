@@ -11,8 +11,6 @@ import {
   disableDrag
 } from "./dom"
 
-process.env.DEBUG = false
-
 const playerView = document.getElementById("player")
 const opponentView = document.getElementById("opponent")
 

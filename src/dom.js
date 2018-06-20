@@ -29,7 +29,6 @@ const renderBoard = (player, opponent, view) => {
       // Integer string mixups are really fun
       const [, x0, y0] = source.id.split("-").map(item => Number(item))
       const [, x1, y1] = target.id.split("-").map(item => Number(item))
-      console.log([x0, y0], [x1, y1])
       if (!player.gameboard.move(x0, y0, x1, y1)) {
         drag.cancel()
       }

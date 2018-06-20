@@ -22,9 +22,6 @@ const eventController = {
     if (this.events[eventName]) {
       this.events[eventName].forEach(call => {
         call(data)
-        if (process.env.DEBUG) {
-          console.log(`${eventName} triggered`, call)
-        }
       })
     } else {
       console.error(`event ${eventName} does not exist`)

@@ -84,15 +84,11 @@ const Gameboard = size => {
       for (let i = 0; i < ship.length; i++) {
         if (direction === "h") {
           if (this.cell(x + i, y) !== 0) {
-            console.log("xy", [x, y, i])
-            console.log("cell", this.cell(x + i, y))
             return false
           }
           pairs.push({ x: x + i, y: y })
         } else if (direction === "v") {
           if (this.cell(x, y + i) !== 0) {
-            console.log("xy", [x, y, i])
-            console.log("cell", this.cell(x, y + i))
             return false
           }
           pairs.push({ x: x, y: y + i })
