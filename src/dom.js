@@ -1,8 +1,11 @@
 import drag from "./drag"
+import eventListener from "./event"
 
 const attackElement = (x, y, opponent) => {
   opponent.attack(x, y)
 }
+
+let rotationEnabled = true
 
 const renderBoard = (player, opponent, view) => {
   const gameboard = player.gameboard
@@ -34,6 +37,10 @@ const renderBoard = (player, opponent, view) => {
       }
     })
   }
+
+  eventListener.subscribe("turn", () => {
+    rotationEnabled = false
+  })
 }
 
 const renderShips = (player, view) => {
@@ -60,7 +67,7 @@ const renderShips = (player, view) => {
         const [, x, y] = event.target.parentNode.id
           .split("-")
           .map(item => Number(item))
-        if (gameboard.rotate(x, y)) {
+        if (rotationEnabled && gameboard.rotate(x, y)) {
           const newWidth = event.target.style.height
           event.target.style.height = event.target.style.width
           event.target.style.width = newWidth
