@@ -1,3 +1,16 @@
+import dragula from "dragula"
+
+const drake = dragula({
+  revertOnSpill: true,
+  invalid: function (element, handle) {
+    if (element.classList.contains("ship")) {
+      return false
+    } else {
+      return true
+    }
+  }
+})
+
 const attackElement = (x, y, opponent) => {
   opponent.attack(x, y)
 }
@@ -11,23 +24,37 @@ const renderBoard = (player, opponent, view) => {
     boardElement.appendChild(row)
 
     for (let x = 0; x < gameboard.size; x++) {
-      const cell = createElement("td", { id: `x${x}y${y}` })
+      const cell = createElement("td", { id: `cell-${x}-${y}` })
       if (player.name === "cpu") {
         cell.addEventListener("click", () => attackElement(x, y, opponent))
       }
+      drake.containers.push(cell)
       row.appendChild(cell)
     }
   }
   view.innerHTML = ""
   view.appendChild(boardElement)
+
+  if (player.name === "player") {
+    drake.on("drop", (element, target, source) => {
+      // Integer string mixups are really fun
+      const [, x0, y0] = source.id.split("-").map(item => Number(item))
+      const [, x1, y1] = target.id.split("-").map(item => Number(item))
+      console.log([x0, y0], [x1, y1])
+      if (!player.gameboard.move(x0, y0, x1, y1)) {
+        drake.cancel()
+      }
+    })
+  }
 }
 
 const renderShips = (player, view) => {
   const gameboard = player.gameboard
+
   const createShipElement = (cell, x, y) => {
     if (cell.ship !== undefined && cell.index === 0) {
       const ship = cell.ship
-      const cellElement = view.querySelector(`#x${x}y${y}`)
+      const cellElement = view.querySelector(`#cell-${x}-${y}`)
       let width, height
       if (ship.direction === "h") {
         width = `calc(${100 * cell.ship.length}% + ${cell.ship.length}px)`
@@ -53,7 +80,7 @@ const renderPegs = (gameboard, view) => {
       let pegElement = createElement("div", {
         className: "peg hit"
       })
-      view.querySelector(`#x${x}y${y}`).append(pegElement)
+      view.querySelector(`#cell-${x}-${y}`).append(pegElement)
       hit = false
     }
   })
@@ -62,7 +89,7 @@ const renderPegs = (gameboard, view) => {
       let pegElement = createElement("div", {
         className: "peg miss"
       })
-      view.querySelector(`#x${x}y${y}`).append(pegElement)
+      view.querySelector(`#cell-${x}-${y}`).append(pegElement)
       miss = false
     }
   })

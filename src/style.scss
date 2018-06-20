@@ -1,3 +1,4 @@
+@import "dragula";
 @import url(https://cdn.rawgit.com/tonsky/FiraCode/1.205/distr/fira_code.css);
 
 /* Coolors Exported Palette - coolors.co/152614-1e441e-2a7221-119822-31cb00 */
@@ -78,6 +79,7 @@ td {
   cursor: grab;
   background-color: $color3;
   height: 100%;
+  position: relative;
   z-index: 2;
 }
 
